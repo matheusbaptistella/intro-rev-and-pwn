@@ -1,2 +1,7 @@
-# Introduction-to-Buffer-Overflow
-Explanation and examples related to the Buffer Overflow vulnerability.
+# Introduction-to-Reverse-Engineering
+This repo aims to be a material on information to comprehend cybersecurity, especifically, reverse engineering. Not only it will present to the reader the concepts related to vulnerabilities and their exploits, but also contain practical examples to make the learning process more dynamic. This material is being written by me: currently I'm student at Universidade de São Paulo (USP), under a Computer Engineering degree. The objective is to write down all the knowledge I've acquired on reverse engineering during graduation, in the most comprehensive way, so I can keep visual track about what I've learned and anyone that feels interested about this subject may read and learned it, just as I did. 
+
+Although it is impossible to truly understand the conditions which make vulnerabilities possible without getting deeper into processor and memory concepts, my goal is to make the explanation seems as natural as possible. Essentially, I will start from initial exploitation techniques, such as Buffer Overflow and Shellcode, but as I gradually advance my studies and gather more knowledge, I will update this material with new information.
+
+## Structure
+For each vulnerability covered in this repo, there will be a corresponding directory with the name of that vulnerability, for example: the complete material, with explanation and examples, about Buffer Overflow will be in the directory named "Buffer Overflow". Inside each directory, there will be a Introdution.md file, which will contain the theoretical explanation about that directory's vulnerability, and another directory, "Examples", which will have the practical examples. So under "Buffer Oveflow" directory, Introduction.md file contains the explanation about the Buffer Overflow subject and "Examples", the examples.
