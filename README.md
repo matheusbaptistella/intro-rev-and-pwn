@@ -4,14 +4,16 @@ This repo aims to be a material on information about cybersecurity, especificall
 Although it's impossible to truly understand the conditions which makes programs vulnerable without getting deeper into processor and memory concepts, my goal is to make the explanation seems **as natural as possible**. Essentially, I'll start from initial exploitation techniques, such as Buffer Overflow and Shellcode, but as I gradually advance my studies and gather more knowledge, I'll **update** this material with new information.
 
 ## Structure
-For each vulnerability covered in this repo, there will be a corresponding directory with the name of that vulnerability, for example: the complete material, with explanation and examples, about Buffer Overflow will be in the directory named "Buffer Overflow". Inside each directory, there will be a theory-introduction file, which will contain the theoretical explanation about that directory's vulnerability, and another directory, "Examples", which will have the practical examples. So under `buffer-overflow` directory, `introduction.md` file contains the explanation about the Buffer Overflow subject and `examples` directory, the examples.
+For each vulnerability covered in this repo, there will be a corresponding directory with the name of that vulnerability, for example: the complete material, with explanation and examples, about Buffer Overflow will be in the directory with its name on it. Inside each directory, there will be a theory-introduction file, which will contain the theoretical explanation about that directory's vulnerability, and another directory with the practical examples. So under `buffer-overflow` directory, `introduction.md` file contains the explanation about the Buffer Overflow subject and `examples` directory, the pre-made examples.
 
 ## General Requirements
 * C programmig language;
-  * Reverse engineering has an intrinsic relation with memory, and so in order to create examples that manage memory usage we'll need to use C.
+  * Reverse engineering has an intrinsic relation with memory, and so in order to explain it and create examples that manage memory usage, we'll use C.
 * x86_64;
-  * This will be the architecture used for explanation in general, so one needs to know, at least superficially, about the processor instructions and registers of this particular architecture.
+  * This will be the architecture used for explanation in general, so one should know, at least superficially, about this processor's instructions and registers, related to this particular architecture.
 * Linux terminal;
   * Basic commands and VIM.
 * Python3.
   * Initially, python will be presented with the use of `pwn` library, but the basic syntax won't be explained.
+
+Whereas this knowledge is required, **do not panic** if you're not sure how much you know about it all: if a vulnerability needs some technichal concepts to be widely-comprehended I'll explain it concisely, but I can't be an entire graduation discipline, so it would be nice to be familiar with these requirements.
