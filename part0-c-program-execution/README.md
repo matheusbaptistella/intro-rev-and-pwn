@@ -1,1 +1,2 @@
-
+# How does a C program executes? 
+Reversing applications involves comprehending whatever kind of code is available, let it be a binary file or maybe just an ELF executable code. In order to be prepared to face different appearences of a simple application, we must comprehend how a C program is executed in a machine: from stages of converting the source code, to linking libraires. Throughout the C execution process many "versions" of your original file are created and modified, depending on what was porgrammed outter files may be included with the soucr code. All in all, 
