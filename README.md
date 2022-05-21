@@ -16,7 +16,7 @@ For each vulnerability covered in this repo, there will be a corresponding direc
 * Python3.
   * Initially, python will be presented with the use of `pwn` library, but the basic syntax won't be explained.
 
-Whereas this knowledge is required, **do not panic** if you're not sure how much you know about it all: if a vulnerability needs some technichal concepts to be widely-comprehended, I'll explain it concisely, but I can't be an entire graduation course, so it's important to be familiar with these requirements.
+Whereas this knowledge is required, **do not panic** if you're not sure how much you know about it all: if a vulnerability needs some technichal concepts to be widely-comprehended, I'll explain it, but, for now, this material tends to be less detailed than an entire graduation course, therefore it's important to be familiar with these requirements.
 
 ## So, what's reverse engineering?
 In a more general meaning, to reverse engineer an object is to analyze its properties, the way it was contructed and the very components that, altogether, make it behaves properly, in order to **fully understand** the functioning of that particular object. In the computer science domain, to reverse engineer a software is to make use of techniques and tools to gather information about its source code, that is, to map how its methods works, how it treats input data and so on, with the final purpose of  being able to **manipulate** it consciously.
