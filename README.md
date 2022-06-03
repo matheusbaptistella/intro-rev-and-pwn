@@ -8,15 +8,15 @@ For each vulnerability covered in this repo, there will be a corresponding direc
 
 ## General Requirements
 * C programmig language;
-  * Reverse engineering has an intrinsic relation with memory, and so in order to explain it and create examples that manage memory usage, we'll use C.
+  * Reverse engineering has an intrinsic relation with memory, so, in order to explain it and create examples that manage memory usage, we'll use C.
 * x86_64;
-  * This will be the architecture used for explanation in general, so one should know, at least superficially, about a processor's instructions and registers, related to this particular architecture.
+  * This will be the architecture used for explanation in general, and it's easier to comprehend if you already know about this architecture's instructions and registers.
 * Linux terminal;
   * Basic commands, VIM and GDB.
 * Python3.
-  * Initially, python will be presented with the use of `pwn` library, but the basic syntax won't be explained.
+  * Initially, python will be presented with the use of `pwn` library.
 
 Whereas this knowledge is required, **do not panic** if you're not sure how much you know about it all: if a vulnerability needs some technichal concepts to be widely-comprehended, I'll explain it, but, for now, this material tends to be less detailed than an entire graduation course, therefore it's important to be familiar with these requirements.
 
 ## So, what's reverse engineering?
-In a more general meaning, to reverse engineer an object is to analyze its properties, the way it was contructed and the very components that, altogether, make it behaves properly, in order to **fully understand** the functioning of that particular object. In the computer science domain, to reverse engineer a software is to make use of techniques and tools to gather information about its source code, that is, to map how its methods works, how it treats input data and so on, with the final purpose of  being able to **manipulate** it purposely.
+In a more general meaning, to reverse engineer an object is to analyze its properties, the way it was contructed and the very components that, altogether, make it behaves properly, in order to **fully understand** the functioning of that particular object. When referring to computer science, to reverse engineer a progra, is to make use of techniques and tools to gather information about its source code, that is, to map how its methods works, how it treats input data and so on, with the final purpose of  being able to **manipulate** it purposely. Cybersecurity professionals will attempt to reverse engineer the code they're responsible for, in order to find out if it's vulnerable to any sorts of attacks.
