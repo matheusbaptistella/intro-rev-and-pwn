@@ -106,5 +106,8 @@ The output show us that `example1` has permissions for the `user`, `group` and `
 ## Memory layout
 Until now, we started with a text file containing the code that we wanted to execute, then we compiled it, transforming its C instructions into assembly instructions and linking library adresses, which generated an ELF64 executable file. However, currently both files are stored in secondary memory and, in order to execute a file, it must be loaded into main memory (RAM).
 
+Furthermore, when information is loaded into RAM our memory gets "divided" and labeled into sections, due to the fact that different regions of our program have distinct access permissions. For example, imagine that you created an `int` and an `int static` variables: certainly, if you set a variable to static, you don't want its value to change. So, to avoid security issues where static variables are changeable you may put them into a region of memory that id readable but not writable, therefore ensuring that the variables in there will never change.
 
+One thing to mention is that in an Operating System, the user
 
+The image below represents the divisions and labels, that is the layout, of the virtual memory of an executing C program:
