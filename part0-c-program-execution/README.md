@@ -103,6 +103,36 @@ ls -l
 
 The output show us that `example1` has permissions for the `user`, `group` and `others` to execute it ([here](https://www.pair.com/support/kb/file-permissions/) for more details), whereas our text file `example1.c` doesn't. Even if we used the `chmod` command to give executable permissions to the latter, the machine would try to execute the text as instructions, which would certainly return a syntax error.
 
+Now, we've transformed the lines of code that we wrote (`example1.c`) into assembly (`example1` ELF file). Yet, the machine still can't comprehend these instructions, what will actually go into our processor are the opcodes that translate into their respective assembly instructions. Lets verify it using the `objdump`command from the terminal:
+
+```
+objdump -M intel -d example1
+[...]
+000000000000120a <main>:
+    120a:       f3 0f 1e fa             endbr64
+    120e:       55                      push   rbp
+    120f:       48 89 e5                mov    rbp,rsp
+    1212:       48 83 ec 50             sub    rsp,0x50
+    1216:       89 7d bc                mov    DWORD PTR [rbp-0x44],edi
+    1219:       48 89 75 b0             mov    QWORD PTR [rbp-0x50],rsi
+    121d:       64 48 8b 04 25 28 00    mov    rax,QWORD PTR fs:0x28
+    1224:       00 00
+    1226:       48 89 45 f8             mov    QWORD PTR [rbp-0x8],rax
+    122a:       31 c0                   xor    eax,eax
+    122c:       c7 45 c4 0a 00 00 00    mov    DWORD PTR [rbp-0x3c],0xa
+    1233:       bf 20 00 00 00          mov    edi,0x20
+    1238:       e8 53 fe ff ff          call   1090 <malloc@plt>
+[...]
+```
+
+The above snippet from function `main` of `example1` shows what is actually interpreted by the machine: our text code got tranformed into assembly instructions, which are then translated into opcodes. Opcodes are bytes that the processor interprets as the assembly instruction they represent ([here](http://ref.x86asm.net/coder64.html#x0A) you can find them all for our x86_64 architecture). Lets look closely to line `1212`:
+
+```
+1212:       48 83 ec 50             sub    rsp,0x50
+```
+
+Basically, what assembly tells us is that when our program executes this line of our program, it should `sub`stract `0x50` bytes from `rsp` (the stack pointer). But what is sent to the processor are the opcodes (in hexadecimal): `\x48 \x83 \xec \x50`.
+
 ## Memory layout
 Until now, we started with a text file containing the code that we wanted to execute, then we compiled it, transforming its C instructions into assembly instructions and linking library adresses, which generated an ELF64 executable file. However, currently both files are stored in secondary memory and, in order to execute a file, it must be loaded into main memory (RAM).
 
