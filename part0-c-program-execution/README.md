@@ -110,4 +110,4 @@ Furthermore, when information is loaded into RAM our memory gets "divided" and l
 
 The image below represents the divisions and labels, that is the layout, of the virtual memory of an executing C program in Linux (an ELF):
 
-![alt text](./elf_memory_layout.png "Memory layout of an ELF file loaded into main memory.)
+![alt text](elf_memory_layout.png "Memory layout of an ELF file loaded into main memory.)
