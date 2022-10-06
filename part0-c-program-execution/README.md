@@ -64,7 +64,7 @@ int main(int argc, char **argv){
 On terminal, we can see what kind of file it is by using the `file` command:
 
 ```
-file ./example1.c
+$ file ./example1.c
 ./example1.c: C source, ASCII text
 ```
 
@@ -83,20 +83,20 @@ Initially, the preprocessing stage will interpret preprocessing directives in yo
 Practically, this can be achieved with the use of GCC ([here](https://en.wikipedia.org/wiki/GNU_Compiler_Collection) for more details), which is the compiler we'll be using throughout this material. On terminal, we can use the `GCC` command:
 
 ```
-gcc ./example1.c -o example1
+$ gcc ./example1.c -o example1
 ```
 
 This will take the current directory `example1.c` file as input, and compile it with the flag `-o`, which will generate `example1` as the output executable. Also, with the `file` command we can confirm that it's indeed an executable:
 
 ```
-file ./example1
+$ file ./example1
 example1: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=44207b0f09a72d6971273de348ebb0c95d17cd04, for GNU/Linux 3.2.0, not stripped
 ```
 
 Notice that we can only execute `example1` because the output file has permissions to be executed. We can verify it using the `ls` command assing the `-l` flag:
 
 ```
-ls -l
+$ ls -l
 -rwxrwxr-x [...] example1
 -rw-rw-r-- [...] example1.c
 ```
@@ -106,7 +106,7 @@ The output show us that `example1` has permissions for the `user`, `group` and `
 Now, we've transformed the lines of code that we wrote (`example1.c`) into assembly (`example1` ELF file). Yet, the machine still can't comprehend these instructions, what will actually go into our processor are the opcodes that translate into their respective assembly instructions. Lets verify it using the `objdump`command from the terminal:
 
 ```
-objdump -M intel -d example1
+$ objdump -M intel -d example1
 [...]
 000000000000120a <main>:
     120a:       f3 0f 1e fa             endbr64
