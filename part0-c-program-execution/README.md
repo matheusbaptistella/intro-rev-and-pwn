@@ -145,7 +145,7 @@ The image below represents the divisions and labels, that is the layout, of the 
 We'll start covering those sections from lower addresses to higher addresses:
 
 * ELF Header
-  * The header of a file is commonly used with the purpose of containing the values of differente aspects of the file (for example, the size of the file, the entry point and so on...). What is useful about headers in general is that those values are always on the same position, that is, the same distance from the beggining of the file. For instance, the flag (value) that tells the program which method to use to decompress a `PKZip` file will always be 8 bytes (offset) from the beginning of the local header ([here](https://users.cs.jmu.edu/buchhofp/forensics/formats/pkzip.html#general) if you got curious). Similarly for an ELF: its header will contain information about that file, always at the same offset.
+  * The header of a file is commonly used with the purpose of containing the values of differente aspects of the file (for example, the size of the file, the entry point and so on...). What is useful about headers in general is that those values are always on the same position, that is, the same distance from the beggining of the file. For instance, the flag (value) that tells the program which method to use to decompress a `PKZip` file will always be 8 bytes (offset) from the beginning of the local header ([here](https://users.cs.jmu.edu/buchhofp/forensics/formats/pkzip.html#general) if you got curious). Similarly for an ELF: its header will contain information about that file.
   
 * .text
   * 
