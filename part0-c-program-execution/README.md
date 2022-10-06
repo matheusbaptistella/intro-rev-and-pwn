@@ -131,7 +131,7 @@ The above snippet from function `main` of `example1` shows what is actually inte
 1212:       48 83 ec 50             sub    rsp,0x50
 ```
 
-Basically, what assembly tells us is that when our program executes this line of our program, it should `sub`stract `0x50` bytes from `rsp` (the stack pointer). But what is sent to the processor are the opcodes (in hexadecimal): `\x48 \x83 \xec \x50`.
+Basically, what assembly tells us is that when our program executes this line of our program, it should `sub`tract `0x50` bytes from `rsp` (the stack pointer). But what is sent to the processor are the opcodes (in hexadecimal): `\x48 \x83 \xec \x50`.
 
 ## Memory layout
 Until now, we started with a text file containing the code that we wanted to execute, then we compiled it, transforming its C instructions into assembly instructions and linking library adresses, which generated an ELF64 executable file. However, currently both files are stored in secondary memory and, in order to execute a file, it must be loaded into main memory (RAM).
