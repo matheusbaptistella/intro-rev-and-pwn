@@ -93,7 +93,7 @@ $ file ./example1
 example1: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=44207b0f09a72d6971273de348ebb0c95d17cd04, for GNU/Linux 3.2.0, not stripped
 ```
 
-Notice that we can only execute `example1` because the output file has permissions to be executed. We can verify it using the `ls` command assing the `-l` flag:
+Notice that we can only execute `example1` because the output file has permissions to be executed. We can verify it using the `ls` command alongside the `-l` flag:
 
 ```
 $ ls -l
