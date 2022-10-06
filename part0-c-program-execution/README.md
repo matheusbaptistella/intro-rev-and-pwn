@@ -3,7 +3,7 @@ Reversing programs involves comprehending different sorts of code, such as a `zi
 
 ## A text file
 Usually, the steps for creating your source code are always the same: you open your preferred text editor/IDE, write some code and then save it somewhere on your machine.
-Have in mind that this is not yet our program: we simply created a text file, which is stored in secondary memory (HDD/SSD). To make it a "program" (executable), we need to transform a texte file into an [ELF 64bit object](https://en.wikipedia.org/wiki/Executable_and_Linkable_Format).
+Have in mind that this is not yet our program: we simply created a text file, which is stored in secondary memory (HDD/SSD). To make it a "program" (executable), we need to transform a texte file into an [ELF 64bits object](https://en.wikipedia.org/wiki/Executable_and_Linkable_Format).
 
 Consider the following C code:
 
@@ -110,4 +110,4 @@ Furthermore, when information is loaded into RAM our memory gets "divided" and l
 
 The image below represents the divisions and labels, that is the layout, of the virtual memory of an executing C program in Linux (an ELF):
 
-![alt text](./memory_layout "Memory layout of an ELF file loaded into main memory.)
+![alt text](../memory_layout "Memory layout of an ELF file loaded into main memory.)
