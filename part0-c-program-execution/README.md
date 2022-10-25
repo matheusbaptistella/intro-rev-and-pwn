@@ -217,4 +217,25 @@ $ cat /proc/some_number/maps
 7fff83bef000-7fff83bf0000 r-xp 00000000 00:00 0                          [vdso]
 ```
 
+The above output shows us how the memory segments of our program were divided for this execution. Following the structure presented previousluy we can infer that the line:
+
+```
+557b2669a000-557b2669b000 r-xp 00001000 08:10 91358                      [...]/example1
+```
+
+of the output is the `.text` section, due to its execution permission `r-xp`. Also,
+
+```
+557b2669b000-557b2669c000 r--p 00002000 08:10 91358                      [...]/example1
+557b2669c000-557b2669d000 r--p 00002000 08:10 91358                      [...]/example1
+```
+
+represent the `.rodata`, because it doesn't have the writing permission `r--p`, in contrast with:
+
+```
+557b2669d000-557b2669e000 rw-p 00003000 08:10 91358                      [...]/example1
+```
+
+which has the writing permission `rw-p`, so it's `.data` section. The stack and heap regions are marked as well and both have read and write permissions `rw-p`.
+
 We've seen how our lines of code are converted into assembly instrucitons and then into the processor's opcodes. Once our executable was generated, we loaded it into main memory, which separeted the information contained within that file into memory segments. These segments all have different access permission, so the content of variables doesn't get misused. Now that we've completed this module, let's check how to exploit programs with what we've learned here.
