@@ -19,45 +19,49 @@ int global_var;
 int init_global_var = 5;
 
 void function(){
-	int stack_var;
-	int init_stack_var = 30;
+        int stack_var;
+        int init_stack_var = 30;
 
-	char buff_var[32];
-	
-	printf("function's stack_var is at address %p\n", &stack_var);
-	printf("function's init_stack_var is at address %p\n", &init_stack_var);
-	printf("function's buff_var is at address %p\n", buff_var);
+        char buff_var[32];
+
+        printf("function's stack_var is at address %p\n", &stack_var);
+        printf("function's init_stack_var is at address %p\n", &init_stack_var);
+        printf("function's buff_var is at address %p\n", buff_var);
 }
 
 int main(int argc, char **argv){
-	int stack_var;
-	int init_stack_var = 10;
+        int stack_var;
+        int init_stack_var = 10;
 
-	static int static_var;
-	static int init_static_var = 20;
-	
-	char buff_var[32];
+        static int static_var;
+        static int init_static_var = 20;
 
-	int *heap_var_ptr;
-	heap_var_ptr = (int *) malloc(32);
+        char buff_var[32];
 
-	printf("the first command line argument is at address %p\n\n", &argv[0]);
+        int *heap_var_ptr;
+        heap_var_ptr = (int *) malloc(32);
 
-	printf("program's init_global_var is at address %p\n", &init_global_var);
-	printf("main's init_static var is at address %p\n\n", &init_static_var);
+        printf("the first command line argument is at address %p\n\n", &argv[0]);
 
-	printf("program's global_var is at address %p\n", &global_var);
-	printf("main's static_var_ptr is at address %p\n\n", &static_var);
+        printf("program's init_global_var is at address %p\n", &init_global_var);
+        printf("main's init_static var is at address %p\n\n", &init_static_var);
 
-	printf("main's heap_var is at address %p\n\n", heap_var_ptr);
+        printf("program's global_var is at address %p\n", &global_var);
+        printf("main's static_var_ptr is at address %p\n\n", &static_var);
 
-	printf("main's stack_var is at address %p\n", &stack_var);
-	printf("main's init_stack_var is at address %p\n", &init_stack_var);
-	printf("main's buff_var is at address %p\n\n", &buff_var);
+        printf("main's heap_var is at address %p\n\n", heap_var_ptr);
 
-	function();
-	
-	return 0;
+        printf("main's stack_var is at address %p\n", &stack_var);
+        printf("main's init_stack_var is at address %p\n", &init_stack_var);
+        printf("main's buff_var is at address %p\n\n", &buff_var);
+
+        function();
+
+        char exit;
+        printf("\nwaiting...\n");
+        scanf("%c", &exit);
+
+        return 0;
 }
 ```
 
@@ -161,5 +165,56 @@ We'll start covering those sections from lower addresses to higher addresses:
 
 * Heap
   * The heap is also a growable memory segment (but differently from the stack, the heap starts from lower addresses and gorws towards higher addresses, that is, towards the stack itself). Commmonly, we say that the heap section is where dynamic memory allocation takes palce, that is, it's where we store data with an unknown size. Even though we don't know what value will be inside the `int i` variable of our program, its size is fixed (for a 64 bit architecture an int will have 8 byte length), therefore it can be placed on the `stack`. When we use `malloc` the size is not constant, so the program will search for a `chunk` of available memory on the heap.
-  
-  
+
+In order to visualize all these segments lets check the `example1` program, taht is on the `examples` folder. Compile it with gcc and execute:
+
+```
+$ gcc example1.c -o example1
+$ ./example1
+```
+
+The output will be as follows:
+
+```
+the first command line argument is at address 0x7fff83b008f8
+
+program's init_global_var is at address 0x557b2669d010
+main's init_static var is at address 0x557b2669d014
+
+program's global_var is at address 0x557b2669d020
+main's static_var_ptr is at address 0x557b2669d01c
+
+main's heap_var is at address 0x557b2858a2a0
+
+main's stack_var is at address 0x7fff83b007c0
+main's init_stack_var is at address 0x7fff83b007c4
+main's buff_var is at address 0x7fff83b007d0
+
+function's stack_var is at address 0x7fff83b00758
+function's init_stack_var is at address 0x7fff83b0075c
+function's buff_var is at address 0x7fff83b00760
+
+waiting...
+
+```
+
+Probably the addresses show on your screen are different: that is because of `ASLR`. Will discuss further on this project about mitigations on bineries, but for now, know that `ASLR` is a security tool used by the operating system to ensure that on every execution the addresses of the variables will always differ from the previous executions. By analizing the output we can clearly tell in which segment each variable was stored. Lets check how the memory layout of this program was organized. It's important to not finish the execution of the exampel program: that's why it "waits" at the end, therefore we can get its pid and see its memory regions, so make sure as you execute the example, you don't press anything else, open another terminal window and do as follows:
+
+```
+$ pidof example1
+some_number
+$ cat /proc/some_number/maps
+557b26699000-557b2669a000 r--p 00000000 08:10 91358                      [...]/example1
+557b2669a000-557b2669b000 r-xp 00001000 08:10 91358                      [...]/example1
+557b2669b000-557b2669c000 r--p 00002000 08:10 91358                      [...]/example1
+557b2669c000-557b2669d000 r--p 00002000 08:10 91358                      [...]/example1
+557b2669d000-557b2669e000 rw-p 00003000 08:10 91358                      [...]/example1
+557b2858a000-557b285ab000 rw-p 00000000 00:00 0                          [heap]
+[...]
+7f6df4b97000-7f6df4b98000 rw-p 00000000 00:00 0
+7fff83ae1000-7fff83b02000 rw-p 00000000 00:00 0                          [stack]
+7fff83beb000-7fff83bef000 r--p 00000000 00:00 0                          [vvar]
+7fff83bef000-7fff83bf0000 r-xp 00000000 00:00 0                          [vdso]
+```
+
+We've seen how our lines of code are converted into assembly instrucitons and then into the processor's opcodes. Once our executable was generated, we loaded it into main memory, which separeted the information contained within that file into memory segments. These segments all have different access permission, so the content of variables doesn't get misused. Now that we've completed this module, let's check how to exploit programs with what we've learned here.
