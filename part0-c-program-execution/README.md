@@ -148,4 +148,18 @@ We'll start covering those sections from lower addresses to higher addresses:
   * The header of a file is commonly used with the purpose of containing the values of differente aspects of the file (for example, the size of the file, the entry point and so on...). What is useful about headers in general is that those values are always on the same position, that is, the same distance from the beggining of the file. For instance, the flag (value) that tells the program which method to use to decompress a `PKZip` file will always be 8 bytes (offset) from the beginning of the local header ([here](https://users.cs.jmu.edu/buchhofp/forensics/formats/pkzip.html#general) if you got curious). Similarly for an ELF: its header will contain information about that file.
   
 * .text
-  * 
+  * This section contains the actual instructions that are gonna be executed by the processor. For instance, the `objdump` command that we executed previously presents to us the `.text` section of the executable that we generated, spefically it shows the instructions to be executed in the `main` function. The `RIP` register will point to the instructions contained within this section.
+
+* .rodata
+  * Probably, at some point back when you were learning to program, you have made a "hello world" program, in which you printed the string `Hello Wolrd!` to the terminal output. That string, no matter what happens to your machine, will always stay the same: this program will always print `Hello World!`. So, as this string won't change, it would be clever to put in a region where the user has only read access, therefore ensuring that it's safe. The `Read Only` data sections contains data that won't change, no matter what happens in your programs execution. You can also see this section as containing the initialized data of your program.
+
+* .data
+  * As for the `Data` section, opposed to the `Read Only` section, contains the uninitialized data. The `static int i;` of your program will be located here.
+
+* Stack
+  * Now we get to the most interesting memory segment for us. The stack is a growable segment (it starts from a higher address and grows towards lower addresses), and it is also LIFO (Last In First Out), just as a stack of plates, the last one that you have places will be the first one you remove to use. Here, the variables of our program are stored. Imagine that hello world program: teh execution doesn't begin from our main function, it begins from an entry point that will probably move the instruction pointer to LibC and then we get to main. In order to provide `main` the necessary space in memory for its variables, before calling `main` the program will create a `stack-frame` in the stack, which is an area in the stack where `main` variables will be stored. When we finish execution of this function, the stack-fram will be removed, which means that we'll move the `RSP` and `RBP` back to the previous stack-frame. With the next example it will become clearer.
+
+* Heap
+  * The heap is also a growable memory segment (but differently from the stack, the heap starts from lower addresses and gorws towards higher addresses, that is, towards the stack itself). Commmonly, we say that the heap section is where dynamic memory allocation takes palce, that is, it's where we store data with an unknown size. Even though we don't know what value will be inside the `int i` variable of our program, its size is fixed (for a 64 bit architecture an int will have 8 byte length), therefore it can be placed on the `stack`. When we use `malloc` the size is not constant, so the program will search for a `chunk` of available memory on the heap.
+  
+  
