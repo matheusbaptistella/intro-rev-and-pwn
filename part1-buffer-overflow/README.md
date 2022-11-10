@@ -25,7 +25,7 @@ $ gcc ./example2.c -o example2
 example2.c:(.text+0x50): warning: the `gets' function is dangerous and should not be used.
 ```
 
-The compiler already warns us about the use of a unsafe function call to `gets`. This warning is because the `gets` function reads input from the `stdin` until the escape character is typed (ENTER). Lets run the executable:
+The compiler already warns us about the use of a unsafe function call. This warning is because the `gets` function reads input from the `stdin` until the escape character is typed (ENTER). Lets run the executable:
 
 ```
 $ ./example
