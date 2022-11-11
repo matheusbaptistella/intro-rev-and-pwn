@@ -95,8 +95,25 @@ My secret is: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 Aborted
 ```
 
-So, if our stack-frame has 32 bytes of space, why does 31 bytes crash the program? Well now comes the seconda part of the disassemble of function `main` showed previously. The OS puts protections into binaries to make then exploit-safe and one of these protections is the `Stack Canary`: basically the OS puts some values on certain locations of our stack-frame and at the end of execution it compares to see if they are still there. When we overflowed the buffer we unintetionally overwrote the stack-canary value, so when the program reached the comparison instruction and the value wasn't the same, it signalled that the stack's integrity had been compromised. As we can see, the program compares the value stored in `[rbp-0x8]`, so if our stack has 32 bytes, but on the eighth is located the stack-canary, so we have 24 bytes to use. Now try typing 24 bytes on the input and you'll see that the program finishes correctly, whereas 25 bytes already makes it crash.
+So, if our stack-frame has 32 bytes of space, why does 31 bytes makes the program stop? Well now comes the seconda part of the disassemble of function `main` showed previously. The OS puts protections into binaries to make then exploit-safe and one of these protections is the `Stack Canary`: basically the OS puts some values on certain locations of our stack-frame and at the end of execution it compares to see if they are still there. When we overflowed the buffer we unintetionally overwrote the stack-canary value, so when the program reached the comparison instruction and the value wasn't the same, it signalled that the stack's integrity had been compromised. As we can see, the program compares the value stored in `[rbp-0x8]`, so if our stack has 32 bytes, but on the eighth is located the stack-canary, we have only 24 bytes to use. Now try typing 24 bytes on the input and you'll see that the program finishes correctly, whereas 25 bytes won't.
 
+But why 32 bytes? That's due to the `stack allignment`: the value stored by `RSP` follows a pattern of increamenting based on a multiple of the size of a `word` in your OS (a performance improvement), which means that, as we are operating in a 64bit machine and a word is equal to 8 bytes, the stack alligment is 16 bytes. 20 is not a multiple of 16, so it has allocated 32 bytes.
+
+In order to be able to exploit this program we must compile it with the GCC flag `-fno-stack-protector`, which will remove the stack-canary from our program. Compile and then try sending 32 bytes as input, you'll see that tha program finishes correctly.
+
+```
+$ gcc ./example2.c -o ./example2 -fno-stack-protector
+```
+
+Now try sneding A LOT of bytes as input:
+
+```
+I'll tell mine if you tell me yours!
+My secret is: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+Segmentation fault
+```
+
+In contrast with the initial attempts to exploit the program where the OS realised that the "stack was smashed", now our program finishes with a `Segmentation Fault`.
 
 
 
