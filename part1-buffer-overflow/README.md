@@ -105,7 +105,7 @@ In order to be able to exploit this program we must compile it with the GCC flag
 $ gcc ./example2.c -o ./example2 -fno-stack-protector
 ```
 
-Now try sneding A LOT of bytes as input:
+Now try sending A LOT of bytes as input:
 
 ```
 I'll tell mine if you tell me yours!
@@ -113,7 +113,7 @@ My secret is: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 Segmentation fault
 ```
 
-In contrast with the initial attempts to exploit the program where the OS realised that the "stack was smashed", now our program finishes with a `Segmentation Fault`.
+In contrast with the initial attempts to exploit the program where the OS realized that the "stack was smashed", now our program finishes with a `Segmentation Fault`. This indicates that we tried to access a region in memory which we didn't have permission to. Lets take a closer look using GDB: disassemble main and set a break point on the `ret` instruction. Then, try sending this `AAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHIIIIJJJJKKKKLLLLMMMM` as input: the program crashes because we overflowed the stack up to the point where we overwrote both the `RBP` registers (check out its value using `info registers`) and the `RIP` register (remember the previous layout of the stack). As we can see, we tried to return to address `0x4c4c4c4c4b4b4b4b`, but that address is not in the text segment of memory, therefore we are not allowed to execute whatever instructions are on that address.
 
 
 
