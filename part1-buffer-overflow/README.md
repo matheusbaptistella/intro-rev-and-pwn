@@ -1,5 +1,5 @@
 # Buffer Overflow
-The first module will be about the Buffer Overflow vulnerability, due to its low level of complexity. Lest take a look a the example:
+The first module will be about the Buffer Overflow vulnerability, due to its low level of complexity. Lets take a look a the example:
 
 ```C
 #include <stdio.h>
