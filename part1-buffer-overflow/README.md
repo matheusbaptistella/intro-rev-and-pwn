@@ -113,7 +113,22 @@ My secret is: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 Segmentation fault
 ```
 
-In contrast with the initial attempts to exploit the program where the OS realized that the "stack was smashed", now our program finishes with a `Segmentation Fault`. This indicates that we tried to access a region in memory which we didn't have permission to. Lets take a closer look using GDB: disassemble main and set a break point on the `ret` instruction. Then, try sending this `AAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHIIIIJJJJKKKKLLLLMMMM` as input: the program crashes because we overflowed the stack up to the point where we overwrote both the `RBP` registers (check out its value using `info registers`) and the `RIP` register (remember the previous layout of the stack). As we can see, we tried to return to address `0x4c4c4c4c4b4b4b4b`, but that address is not in the text segment of memory, therefore we are not allowed to execute whatever instructions are on that address.
+In contrast with the initial attempts to exploit the program where the OS realized that the "stack was smashed", now our program finishes with a `Segmentation Fault`. This indicates that we tried to access a region in memory which we didn't have permission to. Lets take a closer look using GDB: disassemble main and set a break point on the `ret` instruction. Then, try sending this payload `AAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHIIIIJJJJKKKKLLLLMMMM` as input: the program crashes because we overflowed the stack up to the point where we overwrote both the `RBP` registers (check out its value using `info registers`) and the `RIP` register (remember the previous layout of the stack). As we can see, we tried to return to address `0x4c4c4c4c4b4b4b4b`, but that address is not in the text segment of memory, therefore we are not allowed to execute whatever instructions are on that address. In ASCII, character with hex code `4b` is `K` an `4c` is `L`, so  this means that whatever we put in the positions of K and L will be executed. 
+
+So, why don't we try putting `secret_func`'s address? In order to do that, we need to know where that function will be, which means that we'll have to know the address during execution on GDB. Again, lets load our program on GDB and use the command `start` and the `disas secret_func`:
+
+```
+(gdb) disas secret_func
+Dump of assembler code for function secret_func:
+   0x0000555555555189 <+0>:     endbr64
+   0x000055555555518d <+4>:     push   rbp
+   0x000055555555518e <+5>:     mov    rbp,rsp
+   [...]
+   0x000055555555519e <+21>:    pop    rbp
+   0x000055555555519f <+22>:    ret
+```
+
+Now we know that `secret_func` will be place on `0x0000555555555189` address. Due to little endianness we need to write that address reversed. So our payload would look like:
 
 
 
