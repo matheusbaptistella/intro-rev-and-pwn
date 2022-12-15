@@ -156,6 +156,11 @@ p.sendline(b'AAAABBBBCCCCDDDDEEEEFFFFGGGGHHHHIIIIJJJJ\x89\x51\x55\x55\x55\x55')
 p.interactive()
 ```
 
+## Final considerations
+The buffer overflow vulnerability can be exploited in many different ways (later we'll see thisa again when playing around with ROP): change the control flow of execution, just like we did in the previous example, or even change the content of a variable. Nowadays its kind of difficult to exploit this on real programs due to the implementation of the stack-canary (maybe if we could leak the canary... but thats another story) and now more than ever, more programmers are adapting to good programming practices (such as ensuring that the buffer won't be overflowed).
+
+For further reading and learning, I highly recommend the [LiveOverflow](https://www.youtube.com/watch?v=iyAyN3GFM7A&list=PLhixgUqwRTjxglIswKp9mpkfPNfHkzyeN) series of videos about binary exploitation and the initial exercises of the Phoenix module on [Exploit Education](https://exploit.education/).
+
 
 
 
