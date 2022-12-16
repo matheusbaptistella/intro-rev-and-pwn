@@ -40,7 +40,7 @@ In terminal, create a `shellcode.s` file, then use VIM to open and edit it. Writ
 ```assembly
 .global _start
 _start:
-.intel_syntax no_prefix
+.intel_syntax noprefix
         mov     rax, 0x3b
         mov     rdi, [rip+binsh]
         mov     rsi, 0
