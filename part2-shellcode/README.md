@@ -33,7 +33,22 @@ The above snippet is the main section from the assembly dump made by `objdump` o
     11a8:       48 83 ec 20             sub    rsp,0x20
 ```
 
-But how does the processor understands that it should "push rbp"? Well, at the side os the assembly instructions are the `opdcodes` of their respective instructions. The opcodes represente the instruction, but in a way the Intel x86_64 processor comprehends.
+But how does the processor understands that it should "push rbp"? Well, palced at the side of the assembly instructions are the `opdcodes` of their respective instructions. The opcodes represent the instruction, but in a way the Intel x86_64 processor comprehends. Lets write a shellcode to understand it. Writing a shellcode means that we'll be writing assembly. Lets say that we want to open a shell: to do so, we'd have to write the assembly code of the `syscall` that can open a shell, that is, the `execve` syscall. You can check a list of syscalls for different architectures using [this](https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md) reference.
+
+In terminal, create a `shellcode.s` file, then use VIM to open and edit it. Write as follows:
+
+```assembly
+.global _start
+_start:
+.intel_syntax no_prefix
+        mov     rax, 0x3b
+        mov     rdi, [rip+binsh]
+        mov     rsi, 0
+        mov     rdx, 0
+        syscall
+binsh:
+        .string "/bin/sh"
+```
 
 Imagine a simple program which requests the user input of it's name. The user will enter something like "John Doe", but the computer won't save the word itself, it will save, for example, the ASCII hexadecimal representation of each letter. This means that if we want to insert the "push rbp" instruction we can't do it by typing it, otherwise the letters are gonna get saved, not the instruction itself. Therefore, we need to send hte `opcodes` of each instruciton as input.
 
@@ -48,6 +63,11 @@ int main() {
 }
 ```
 
+ANOTACOES DEPOIS TERMINO:
+
+- 8 bytes do rbp + 16 bytes do buffer + 8 bytes do endereco de retorno
+- Colocar o shellcode apos o end de retorno pois se colocado no comeco da stack, instrucoes de push podem sobresscrever o shellcode
+- _start identifica por onde o nosos assmebly ira comecar a ser executado
 
 ## Further reading
 Pwn college
